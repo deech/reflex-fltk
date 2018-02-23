@@ -1,21 +1,21 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Main where
 
-import qualified Lib as Reflex
+import Lib
 
 import qualified Graphics.UI.FLTK.LowLevel.FL as FL
 import Graphics.UI.FLTK.LowLevel.Fl_Types
 import Graphics.UI.FLTK.LowLevel.FLTKHS
 
-buttonCb :: Ref Button -> Reflex.Widget ()
-buttonCb b' = Reflex.Widget $ do
+buttonCb :: Ref Button -> FLTK ()
+buttonCb b' = FLTK $ do
   l' <- getLabel b'
   if (l' == "Hello world")
     then setLabel b' "Goodbye world"
     else setLabel b' "Hello world"
 
-ui :: Reflex.Widget ()
-ui = Reflex.Widget $ do
+ui :: FLTK ()
+ui = FLTK $ do
  window <- windowNew
            (Size (Width 115) (Height 100))
            Nothing
@@ -25,9 +25,9 @@ ui = Reflex.Widget $ do
         (Rectangle (Position (X 10) (Y 30)) (Size (Width 95) (Height 30)))
         (Just "Hello world")
  setLabelsize b' (FontSize 10)
- setCallback b' (Reflex.unWidget . buttonCb)
+ setCallback b' (unFLTK . buttonCb)
  end window
  showWidget window
 
 main :: IO ()
-main = Reflex.runWidget ui
+main = runFLTK ui
