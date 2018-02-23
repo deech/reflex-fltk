@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: d9607d3ed2437496123b2ef36abd8774ef25ce3eabe5602481fc4bf53260dfc1
+-- hash: 1e73043b78b157a0f8bdc53e7f8a9dc10560cd651a8adf684bf2d191b84bfebc
 
 name:           reflex-fltk
 version:        0.1.0.0
@@ -30,6 +30,7 @@ library
       src
   build-depends:
       base >=4.7 && <5
+    , fltkhs
   exposed-modules:
       Lib
   other-modules:
@@ -43,6 +44,7 @@ executable reflex-fltk-exe
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , fltkhs
     , reflex-fltk
   other-modules:
       Paths_reflex_fltk
@@ -56,6 +58,7 @@ test-suite reflex-fltk-test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , fltkhs
     , reflex-fltk
   other-modules:
       Paths_reflex_fltk
