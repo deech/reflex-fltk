@@ -1,8 +1,17 @@
 resolver: lts-10.6
 
 packages:
+- location:
+    git: https://github.com/ryantrinkle/reflex
+    commit: 6a8c4efe9a181cc2d97900f5a7519c46cb13e0bb
+  extra-dep: true
+- location:
+    git: https://github.com/bennofs/reflex-host
+    commit: ab72c16077ab3bcc1c1e81312aac1090e64b97d4
+  extra-dep: true
 - .
-extra-deps: [fltkhs-0.5.4.4]
+
+extra-deps: [fltkhs-0.5.4.4, prim-uniq-0.1.0.1]
 
 ghc-options:
-  "$everything": -pgml g++ "-optl-Wl,--allow-multiple-definition" "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"
+  $locals: -pgml g++ "-optl-Wl,--allow-multiple-definition" "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"

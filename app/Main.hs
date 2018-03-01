@@ -1,33 +1,35 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, RecursiveDo #-}
 module Main where
 
 import Lib
 
-import qualified Graphics.UI.FLTK.LowLevel.FL as FL
-import Graphics.UI.FLTK.LowLevel.Fl_Types
 import Graphics.UI.FLTK.LowLevel.FLTKHS
+import Reflex.Class
+import Reflex.Host.App
+import Reflex.Host.Class
+import Reflex.Spider
+import Control.Monad.IO.Class
+import Reflex.Dynamic
+import Data.Text(Text, pack)
+import Control.Concurrent (forkIO)
+import Control.Monad(forever)
+import qualified Graphics.UI.FLTK.LowLevel.FL as FL
+import qualified Data.DList as DL
 
-buttonCb :: Ref Button -> FLTK ()
-buttonCb b' = FLTK $ do
-  l' <- getLabel b'
-  if (l' == "Hello world")
-    then setLabel b' "Goodbye world"
-    else setLabel b' "Hello world"
-
-ui :: FLTK ()
-ui = FLTK $ do
- window <- windowNew
-           (Size (Width 115) (Height 100))
-           Nothing
-           Nothing
- begin window
- b' <- buttonNew
-        (Rectangle (Position (X 10) (Y 30)) (Size (Width 95) (Height 30)))
-        (Just "Hello world")
- setLabelsize b' (FontSize 10)
- setCallback b' (unFLTK . buttonCb)
- end window
- showWidget window
+ui :: MonadAppHost t m => FLTK m ()
+ui = FLTK $ mdo
+  window <- liftIO $ windowNew
+            (Size (Width 115) (Height 100))
+            Nothing
+            Nothing
+  liftIO $ begin window
+  label <- foldDyn (const (+1)) 0 b
+  b <- unFLTK $ button
+         (Rectangle (Position (X 10) (Y 30)) (Size (Width 95) (Height 30)))
+         (fmap (pack . show) label)
+  liftIO $ end window
+  liftIO $ showWidget window
+  return ()
 
 main :: IO ()
-main = runFLTK ui
+main = runSpiderHost $ hostApp $ runFLTK ui
