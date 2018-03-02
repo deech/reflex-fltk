@@ -1,4 +1,4 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving, OverloadedStrings, TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses, RankNTypes #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving, OverloadedStrings, TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses, RankNTypes, UndecidableInstances #-}
 
 module Reflex.FLTK where
 
@@ -9,12 +9,23 @@ import Data.Text(pack, Text)
 import Graphics.UI.FLTK.LowLevel.FLTKHS
 import Control.Monad.IO.Class
 import Control.Monad.Fix
+import Control.Monad.Trans.Class
 import Control.Concurrent(forkIO)
 import qualified Reflex.Spider.Internal(Spider, runSpiderHost)
 import qualified Data.DList as DL
 import qualified Graphics.UI.FLTK.LowLevel.FL as FL
 
 newtype FLTK m a = FLTK { unFLTK :: m a } deriving (Functor, Applicative, Monad, MonadFix, MonadIO)
+
+instance MonadTrans FLTK where
+  lift = FLTK
+
+instance MonadSample t m => MonadSample t (FLTK m) where
+  sample = lift . sample
+
+instance MonadHold t m => MonadHold t (FLTK m) where
+  headE = lift . headE
+  buildDynamic p e = lift $ buildDynamic p e
 
 runFLTKAux :: MonadAppHost t m => IO () -> FLTK m () -> m ()
 runFLTKAux run (FLTK a) = do

@@ -23,6 +23,7 @@ dependencies:
 - fltkhs
 - text
 - dlist
+- transformers
 
 library:
   source-dirs: src
