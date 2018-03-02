@@ -1,6 +1,6 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving, OverloadedStrings, TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses, RankNTypes #-}
 
-module Lib where
+module Reflex.FLTK where
 
 import Reflex.Class
 import Reflex.Host.Class
