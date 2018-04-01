@@ -1,6 +1,6 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving, OverloadedStrings, TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses, RankNTypes, UndecidableInstances #-}
 
-module Reflex.FLTK where
+module Reflex.FLTK(module Reflex.FLTK, module Control.Monad.IO.Class) where
 
 import Reflex.Class
 import Reflex.Host.Class
@@ -50,3 +50,4 @@ button rect label = FLTK $ do
   liftIO $ setCallback b' (const $ trigger () >> return ())
   performEvent_ $ fmap (liftIO . setLabel b') $ updated label
   return e
+
