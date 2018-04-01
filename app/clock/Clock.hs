@@ -22,8 +22,6 @@ ui = do
   liftIO $ setType c2 RoundClock
   liftIO $ setResizable w2 (Just c2)
   liftIO $ end w2
-  liftIO $ setXclass w1 "Fl_Clock"
-  liftIO $ setXclass w2 "Fl_Clock"
   liftIO $ showWidget w1
   liftIO $ showWidget w2
   return ()
