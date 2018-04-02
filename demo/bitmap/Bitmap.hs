@@ -152,9 +152,8 @@ ui = do
     liftIO $ setCallback overb' $ buttonCb state'
     liftIO $ setCallback inactb' $ buttonCb state'
     liftIO $ setResizable window (Just window)
-    return ()
   liftIO $ showWidget window
   return ()
 
 main :: IO ()
-main = runSpiderHost $ hostApp $ runFLTK ui
+main = runFLTKIO ui
