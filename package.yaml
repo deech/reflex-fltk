@@ -24,6 +24,7 @@ dependencies:
 - text
 - dlist
 - transformers
+- bytestring
 
 library:
   source-dirs: src
@@ -41,6 +42,15 @@ executables:
   reflex-fltk-clock:
     main:               Clock.hs
     source-dirs:        demo/clock
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - reflex-fltk
+  reflex-fltk-bitmap:
+    main:               Bitmap.hs
+    source-dirs:        demo/bitmap
     ghc-options:
     - -threaded
     - -rtsopts

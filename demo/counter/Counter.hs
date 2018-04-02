@@ -6,24 +6,8 @@ import Reflex.FLTK
 import Graphics.UI.FLTK.LowLevel.FLTKHS
 import Reflex.Class
 import Reflex.Host.App
-import Reflex.Host.Class
-import Reflex.Spider
-import Control.Monad.IO.Class
 import Reflex.Dynamic
 import Data.Text(Text, pack)
-import Control.Concurrent (forkIO)
-import Control.Monad(forever)
-import qualified Graphics.UI.FLTK.LowLevel.FL as FL
-import qualified Data.DList as DL
-
-within :: (Match br ~ FindOp window window (Begin ()), Op (Begin ()) br window (IO ()),
-           Match er ~ FindOp window window (End ()), Op (End ()) er window (IO ()), MonadIO m) =>
-          Ref window -> FLTK m () -> FLTK m ()
-within window x = do
-  () <- liftIO $ begin window
-  x
-  () <- liftIO $ end window
-  return ()
 
 ui :: MonadAppHost t m => FLTK m ()
 ui = mdo
@@ -41,4 +25,4 @@ ui = mdo
   return ()
 
 main :: IO ()
-main = runSpiderHost $ hostApp $ runFLTK ui
+main = runFLTKIO ui

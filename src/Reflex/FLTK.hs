@@ -1,4 +1,4 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving, OverloadedStrings, TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses, RankNTypes, UndecidableInstances #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving, OverloadedStrings, TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses, RankNTypes, UndecidableInstances, GADTs, FlexibleContexts #-}
 
 module Reflex.FLTK(module Reflex.FLTK, module Control.Monad.IO.Class) where
 
@@ -11,6 +11,7 @@ import Control.Monad.IO.Class
 import Control.Monad.Fix
 import Control.Monad.Trans.Class
 import Control.Concurrent(forkIO)
+import Reflex.Spider
 import qualified Reflex.Spider.Internal(Spider, runSpiderHost)
 import qualified Data.DList as DL
 import qualified Graphics.UI.FLTK.LowLevel.FL as FL
@@ -38,6 +39,9 @@ runFLTKAux run (FLTK a) = do
 runFLTK :: MonadAppHost t m => FLTK m () -> m ()
 runFLTK = runFLTKAux (FL.run >> FL.flush)
 
+runFLTKIO :: FLTK (AppHost (SpiderTimeline Reflex.Spider.Global)) () -> IO ()
+runFLTKIO = runSpiderHost . hostApp . runFLTK
+
 runFLTKRepl :: MonadAppHost t m => FLTK m () -> m ()
 runFLTKRepl = runFLTKAux FL.replRun
 
@@ -51,3 +55,11 @@ button rect label = FLTK $ do
   performEvent_ $ fmap (liftIO . setLabel b') $ updated label
   return e
 
+within :: (Match br ~ FindOp window window (Begin ()), Op (Begin ()) br window (IO ()),
+           Match er ~ FindOp window window (End ()), Op (End ()) er window (IO ()), MonadIO m) =>
+          Ref window -> FLTK m () -> FLTK m ()
+within window x = do
+  () <- liftIO $ begin window
+  x
+  () <- liftIO $ end window
+  return ()
