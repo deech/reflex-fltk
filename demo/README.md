@@ -1,4 +1,4 @@
-# All demos are copied from others!
+# All demos are originally copied from others!
 
 ## I had modified them though, and the result is still under LGPL. They are from MIT license so it is ok.
 
