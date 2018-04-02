@@ -61,5 +61,4 @@ within :: (Match br ~ FindOp window window (Begin ()), Op (Begin ()) br window (
 within window x = do
   () <- liftIO $ begin window
   x
-  () <- liftIO $ end window
-  return ()
+  liftIO $ end window
