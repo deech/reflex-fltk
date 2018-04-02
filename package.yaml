@@ -30,19 +30,17 @@ library:
 
 executables:
   reflex-fltk-counter:
-    main:                Counter.hs
-    source-dirs:         app/counter
+    main:               Counter.hs
+    source-dirs:        demo/counter
     ghc-options:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
     - reflex-fltk
-
-executables:
   reflex-fltk-clock:
-    main:                Clock.hs
-    source-dirs:         app/clock
+    main:               Clock.hs
+    source-dirs:        demo/clock
     ghc-options:
     - -threaded
     - -rtsopts
