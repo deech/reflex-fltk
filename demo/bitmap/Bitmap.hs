@@ -121,38 +121,38 @@ buttonCb state' _ =
 ui :: MonadAppHost t m => FLTK m ()
 ui = do
   window <- liftIO $ doubleWindowNew (Size (Width 400) (Height 400)) Nothing Nothing
-  liftIO $ begin window
-  button <- liftIO $ buttonNew
-              (Rectangle
-                (Position (X 140) (Y 160))
-                (Size (Width 120) (Height 120)))
-              (Just "Bitmap")
-  bitmap <- liftIO $ bitmapNew
-             (BitmapHs
-               sorceressBits
-               (Size
-                 (Width sorceressWidth)
-                 (Height sorceressHeight)))
-  liftIO $ setImage button (Just bitmap)
-  leftb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 25) (Y 50)) (Size (Width 50) (Height 25))) (Just "left")
-  rightb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 75) (Y 50)) (Size (Width 50) (Height 25))) (Just "right")
-  topb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 125) (Y 50)) (Size (Width 50) (Height 25))) (Just "top")
-  bottomb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 175) (Y 50)) (Size (Width 50) (Height 25))) (Just "bottom")
-  insideb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 225) (Y 50)) (Size (Width 50) (Height 25))) (Just "inside")
-  overb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 25) (Y 75)) (Size (Width 100) (Height 25))) (Just "text over")
-  inactb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 125) (Y 75)) (Size (Width 100) (Height 25))) (Just "inactive")
-  state' <- liftIO $ newIORef ((ToggleButtons leftb' rightb' topb' bottomb' insideb' overb' inactb'),
-                      button,
-                      window)
-  liftIO $ setCallback leftb' $ buttonCb state'
-  liftIO $ setCallback rightb' $ buttonCb state'
-  liftIO $ setCallback topb' $ buttonCb state'
-  liftIO $ setCallback bottomb' $ buttonCb state'
-  liftIO $ setCallback insideb' $ buttonCb state'
-  liftIO $ setCallback overb' $ buttonCb state'
-  liftIO $ setCallback inactb' $ buttonCb state'
-  liftIO $ setResizable window (Just window)
-  liftIO $ end window
+  within window $ do
+    button <- liftIO $ buttonNew
+                (Rectangle
+                  (Position (X 140) (Y 160))
+                  (Size (Width 120) (Height 120)))
+                (Just "Bitmap")
+    bitmap <- liftIO $ bitmapNew
+                (BitmapHs
+                  sorceressBits
+                  (Size
+                    (Width sorceressWidth)
+                    (Height sorceressHeight)))
+    liftIO $ setImage button (Just bitmap)
+    leftb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 25) (Y 50)) (Size (Width 50) (Height 25))) (Just "left")
+    rightb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 75) (Y 50)) (Size (Width 50) (Height 25))) (Just "right")
+    topb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 125) (Y 50)) (Size (Width 50) (Height 25))) (Just "top")
+    bottomb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 175) (Y 50)) (Size (Width 50) (Height 25))) (Just "bottom")
+    insideb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 225) (Y 50)) (Size (Width 50) (Height 25))) (Just "inside")
+    overb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 25) (Y 75)) (Size (Width 100) (Height 25))) (Just "text over")
+    inactb' <- liftIO $ toggleButtonNew (Rectangle (Position (X 125) (Y 75)) (Size (Width 100) (Height 25))) (Just "inactive")
+    state' <- liftIO $ newIORef ((ToggleButtons leftb' rightb' topb' bottomb' insideb' overb' inactb'),
+                         button,
+                         window)
+    liftIO $ setCallback leftb' $ buttonCb state'
+    liftIO $ setCallback rightb' $ buttonCb state'
+    liftIO $ setCallback topb' $ buttonCb state'
+    liftIO $ setCallback bottomb' $ buttonCb state'
+    liftIO $ setCallback insideb' $ buttonCb state'
+    liftIO $ setCallback overb' $ buttonCb state'
+    liftIO $ setCallback inactb' $ buttonCb state'
+    liftIO $ setResizable window (Just window)
+    return ()
   liftIO $ showWidget window
   return ()
 
