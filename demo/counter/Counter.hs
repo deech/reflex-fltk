@@ -4,10 +4,8 @@ module Main where
 import Reflex.FLTK
 
 import Graphics.UI.FLTK.LowLevel.FLTKHS
-import Reflex.Class
-import Reflex.Host.App
 import Reflex.Dynamic
-import Data.Text(Text, pack)
+import Data.Text(pack)
 
 ui :: MonadAppHost t m => FLTK m ()
 ui = mdo

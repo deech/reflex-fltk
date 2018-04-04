@@ -88,7 +88,7 @@ ui = do
     liftIO $ setColor w2 blackColor
     liftIO $ setResizable w2 (Just w2)
     within w2 $ do
-      slider1 <- liftIO $ horSliderNew (toRectangle $ (20,370,360,25)) Nothing
+      slider1 <- liftIO $ horSliderNew (toRectangle (20,370,360,25)) Nothing
       liftIO $ range slider1 2 30
       liftIO $ setStep slider1 1
       _ <- liftIO $ readIORef sides' >>= setValue slider1 . fst
