@@ -18,6 +18,7 @@ ui = mdo
     b <- button
          (Rectangle (Position (X 10) (Y 30)) (Size (Width 95) (Height 30)))
          (fmap (pack . show) label)
+         def
     return ()
   liftIO $ showWidget window
   return ()

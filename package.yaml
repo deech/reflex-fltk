@@ -25,6 +25,7 @@ dependencies:
 - dlist
 - transformers
 - bytestring
+- data-default
 
 library:
   source-dirs: src

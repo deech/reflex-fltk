@@ -1,7 +1,8 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving, OverloadedStrings, TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses, RankNTypes, UndecidableInstances, GADTs, FlexibleContexts #-}
 
-module Reflex.FLTK(module Reflex.FLTK, module Control.Monad.IO.Class, module Reflex.Host.App) where
+module Reflex.FLTK(module Reflex.FLTK, module Control.Monad.IO.Class, module Reflex.Host.App, module Data.Default) where
 
+import Data.Default
 import Reflex.Class
 import Reflex.Host.Class
 import Reflex.Host.App
@@ -45,8 +46,13 @@ runFLTKIO = runSpiderHost . hostApp . runFLTK
 runFLTKRepl :: MonadAppHost t m => FLTK m () -> m ()
 runFLTKRepl = runFLTKAux FL.replRun
 
-button :: MonadAppHost t m => Rectangle -> Dynamic t Text -> FLTK m (Event t ())
-button rect label = FLTK $ do
+data ButtonAttr = ButtonAttr
+
+instance Default ButtonAttr where
+  def = ButtonAttr
+
+button :: MonadAppHost t m => Rectangle -> Dynamic t Text -> ButtonAttr -> FLTK m (Event t ())
+button rect label _ = FLTK $ do
   (e, trigger) <- newExternalEvent
   initLabel <- sample $ current label
   b' <- liftIO $ buttonNew rect $ Just initLabel
