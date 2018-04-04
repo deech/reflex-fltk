@@ -4,4 +4,4 @@
 
 Counter come from [fltkhs-hello-world](https://github.com/deech/fltkhs-hello-world)
 
-Bitmap, Clock come from [fltkhs-demos](https://github.com/deech/fltkhs-demos)
+Bitmap, Clock, DoubleBuffer come from [fltkhs-demos](https://github.com/deech/fltkhs-demos)

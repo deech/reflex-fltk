@@ -1,6 +1,6 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving, OverloadedStrings, TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses, RankNTypes, UndecidableInstances, GADTs, FlexibleContexts #-}
 
-module Reflex.FLTK(module Reflex.FLTK, module Control.Monad.IO.Class) where
+module Reflex.FLTK(module Reflex.FLTK, module Control.Monad.IO.Class, module Reflex.Host.App) where
 
 import Reflex.Class
 import Reflex.Host.Class
@@ -57,8 +57,9 @@ button rect label = FLTK $ do
 
 within :: (Match br ~ FindOp window window (Begin ()), Op (Begin ()) br window (IO ()),
            Match er ~ FindOp window window (End ()), Op (End ()) er window (IO ()), MonadIO m) =>
-          Ref window -> FLTK m () -> FLTK m ()
+          Ref window -> FLTK m a -> FLTK m a
 within window x = do
   () <- liftIO $ begin window
-  x
-  liftIO $ end window
+  res <- x
+  () <- liftIO $ end window
+  return res
