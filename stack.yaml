@@ -11,7 +11,7 @@ packages:
   extra-dep: true
 - .
 
-extra-deps: [fltkhs-0.5.4.4, prim-uniq-0.1.0.1]
+extra-deps: [fltkhs-0.5.4.5, prim-uniq-0.1.0.1]
 
 ghc-options:
   $locals: -pgml g++ "-optl-Wl,--allow-multiple-definition" "-optl-Wl,--whole-archive" "-optl-Wl,-Bstatic" "-optl-Wl,-lfltkc" "-optl-Wl,-Bdynamic" "-optl-Wl,--no-whole-archive"

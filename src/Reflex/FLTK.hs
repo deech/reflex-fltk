@@ -60,12 +60,3 @@ button rect label _ = FLTK $ do
   liftIO $ setCallback b' (const $ trigger () >> return ())
   performEvent_ $ fmap (liftIO . setLabel b') $ updated label
   return e
-
-within :: (Match br ~ FindOp window window (Begin ()), Op (Begin ()) br window (IO ()),
-           Match er ~ FindOp window window (End ()), Op (End ()) er window (IO ()), MonadIO m) =>
-          Ref window -> FLTK m a -> FLTK m a
-within window x = do
-  () <- liftIO $ begin window
-  res <- x
-  () <- liftIO $ end window
-  return res
